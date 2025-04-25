@@ -29,11 +29,21 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
         
+    # Pastikan langkah build ini berhasil dijalankan
     - name: Build with Maven
       run: mvn -B clean verify
+      
+    # Tambahkan langkah untuk memverifikasi keberadaan direktori target
+    - name: Verify target directory
+      run: |
+        ls -la target/
+        ls -la target/test-classes/ || echo "test-classes directory not found"
       
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@master
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      with:
+        args: >
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
