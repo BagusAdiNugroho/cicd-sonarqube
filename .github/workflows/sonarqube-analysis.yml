@@ -37,6 +37,4 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      # with:
-      #   args: >
-      #     -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+        SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
